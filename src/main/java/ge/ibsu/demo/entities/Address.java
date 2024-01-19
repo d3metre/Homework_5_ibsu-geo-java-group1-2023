@@ -1,30 +1,35 @@
 package ge.ibsu.demo.entities;
 
-import jakarta.persistence.*;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "address")
 public class Address {
 
     @Id
-    @SequenceGenerator(name = "address_address_id_seq", sequenceName = "address_address_id_seq", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "address_address_id_seq")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "address_id")
-    private Long id;
+    private Long addressId;
 
     @Column(name = "address")
     private String address;
 
-    @Column(name = "postal_code")
-    private String postalCode;
+    @ManyToOne
+    @JoinColumn(name = "city_id")
+    private City city;
 
-
-    public Long getId() {
-        return id;
+    public Address(Long addressId, String address, City city) {
+        this.addressId = addressId;
+        this.address = address;
+        this.city = city;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public Long getAddressId() {
+        return addressId;
+    }
+
+    public void setAddressId(Long addressId) {
+        this.addressId = addressId;
     }
 
     public String getAddress() {
@@ -35,11 +40,11 @@ public class Address {
         this.address = address;
     }
 
-    public String getPostalCode() {
-        return postalCode;
+    public City getCity() {
+        return city;
     }
 
-    public void setPostalCode(String postalCode) {
-        this.postalCode = postalCode;
+    public void setCity(City city) {
+        this.city = city;
     }
 }
